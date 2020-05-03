@@ -1,0 +1,9 @@
+<div class="carousel">
+  <ngb-carousel *ngIf="images">
+    <ng-template *ngFor="let image of images; let i = index" ngbSlide>
+      <div class="carousel-wrap">
+        <img [src]="image" [alt]="i">
+      </div>
+    </ng-template>
+  </ngb-carousel>
+</div>

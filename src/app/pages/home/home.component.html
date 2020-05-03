@@ -1,0 +1,22 @@
+<div class="home">
+  <div class="col-carousel">
+    <carousel></carousel>
+  </div>
+
+  <div class="container">
+
+
+
+    <div class="catalog">
+      <!-- TODO ----------------------------------------- -->
+      <p *ngIf="(eCommerce.products$ | async).length == 0">Lista Vazia</p>
+      <!-- TODO ----------------------------------------- -->
+
+      <div class="row">
+        <div class="col" *ngFor="let product of eCommerce.products$ | async; index as i">
+          <product-card [product]="product" (addProductToCart)="eCommerce.addProductToCart($event)"></product-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

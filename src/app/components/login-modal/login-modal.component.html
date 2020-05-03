@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Autenticação</h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <div class="form-group">
+      <label for="email">E-mail</label>
+      <input type="email" class="form-control" name="email" ngModel #email="ngModel"
+        [class]="email.valid ? 'is-valid' : 'is-invalid'" placeholder="Informar e-mail" required>
+      <div class="invalid-feedback">
+        Por favor, insira um e-mail.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Senha</label>
+      <input type="password" class="form-control" ngModel name="password" #password="ngModel"
+        [class]="password.valid ? 'is-valid' : 'is-invalid'" placeholder="Senha" required>
+      <div class="invalid-feedback">
+        Por favor, insira uma senha.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Entrar</button>
+  </form>
+</div>

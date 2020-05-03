@@ -1,0 +1,27 @@
+<div class="cart-icon">
+  <fa-icon [icon]="faShoppingBag" size="2x" [styles]="{'color': '#a87c96'}" [routerLink]="['/checkout']"></fa-icon>
+  <div class="items-quantity" *ngIf="(eCommerce.orderItems$ | async).length != 0">
+    <p>{{(eCommerce.orderItems$ | async).length}}</p>
+  </div>
+
+  <div class="cart-items">
+    <div *ngIf="(eCommerce.orderItems$ | async).length == 0">
+      <p>Carrinho Vazio</p>
+    </div>
+
+    <div *ngIf="(eCommerce.orderItems$ | async).length != 0">
+      <div class="item-card row" *ngFor="let item of eCommerce.orderItems$ | async; let i = index">
+        <div class="col-3 col-md-3">
+          <img [src]="item.product.cover" class="mr-2" style="width: 50px">
+        </div>
+        <div class="col">
+          <div class="item-title row"> {{item.product.title}} </div>
+          <div class="item-info row"> x{{item.quantity}} - R$ {{item.subtotal.toFixed(2).replace('.', ',')}} </div>
+        </div>
+      </div>
+      <div class="checkout-btn">
+        <button type="button" class="btn btn-link btn-sm" [routerLink]="['/checkout']">Checkout</button>
+      </div>
+    </div>
+  </div>
+</div>

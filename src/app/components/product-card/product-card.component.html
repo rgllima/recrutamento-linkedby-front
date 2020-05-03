@@ -1,0 +1,26 @@
+<div class="product-card">
+  <div class="card">
+    <div class="card-body">
+      <div class="offer" *ngIf="product.discount != 0">
+        <p>{{getDiscount()}}% OFF</p>
+      </div>
+
+      <img class="cover" [src]="product.cover" alt="Vinho">
+
+      <p class="product-title">{{product.title}}.</p>
+      <div *ngIf="product.available">
+        <div class="price">
+          <p class="original" *ngIf="product.discount != 0">R$ {{getPrice()}}</p>
+          <p class="total">R$ {{getPriceWithDiscount()}}</p>
+        </div>
+        <button type="button" class="btn btn-info btn-group-sm" (click)="addProduct()">Adicionar</button>
+      </div>
+
+      <div class="unavailable" *ngIf="!product.available">
+        <p>Indisponível</p>
+      </div>
+
+
+    </div>
+  </div>
+</div>

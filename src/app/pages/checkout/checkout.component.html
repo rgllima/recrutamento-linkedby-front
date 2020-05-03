@@ -1,0 +1,60 @@
+<div class="checkout">
+  <div class="container">
+    <div class="empty-cart" *ngIf="(eCommerce.orderItems$ | async).length == 0">
+      <img src="../../../assets/empty-cart.png" alt="empty-cart">
+      <p>Seu Carrinho Está Vazio!</p>
+      <button type="button" class="btn btn-info btn-sm" [routerLink]="['/']">Voltar às Compras</button>
+    </div>
+
+    <div class="full-cart" *ngIf="(eCommerce.orderItems$ | async).length != 0">
+      <div class="order-items">
+        <div class="row header">
+          <div class="col col-lg-1"></div>
+          <div class="col">Produto</div>
+          <div class="col col-lg-2">
+            Quantidade
+          </div>
+          <div class="col col-lg-2">
+            Subtotal
+          </div>
+          <div class="col col-lg-1">
+            s
+          </div>
+        </div>
+
+        <div class="row" *ngFor="let item of eCommerce.orderItems$ | async">
+          <div class="col col-lg-1">
+            <img class="product-image" [src]="item.product.cover" alt="empty-cart">
+          </div>
+          <div class="col">
+            <p>{{item.product.title}}</p>
+          </div>
+          <div class="col col-lg-2">
+            <div class="row change-quantity">
+              <fa-icon class="minus-icon" [icon]="faMinusCircle" (click)="eCommerce.removeProductToCart(item.product)">
+              </fa-icon>
+              <p class="quantity">{{item.quantity}}</p>
+              <fa-icon class="plus-icon" [icon]="faPlusCircle" (click)="eCommerce.addProductToCart(item.product)">
+              </fa-icon>
+            </div>
+          </div>
+          <div class="col col-lg-2">
+            <p>R$ {{item.subtotal.toFixed(2).replace('.', ',')}}</p>
+          </div>
+          <div class="col col-lg-1">
+            <fa-icon class="trash-icon" [icon]="faTrash" [style]="{color: '#dc3545'}"
+              (click)="eCommerce.deleteOrderItem(item)"></fa-icon>
+          </div>
+        </div>
+      </div>
+      <div class="total-price">
+        <p><strong>TOTAL</strong></p>
+        <p>R$ {{(eCommerce.order$ | async).total.toFixed(2).replace('.', ',')}}</p>
+      </div>
+      <div class="buttons">
+        <button type="button" class="btn btn-info btn-sm" [routerLink]="['/']">Continuar Comprando</button>
+        <button type="button" class="btn btn-success btn-sm" (click)="sendOrder()">Finalizar Pedido</button>
+      </div>
+    </div>
+  </div>
+</div>

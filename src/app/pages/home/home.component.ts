@@ -7,7 +7,9 @@ import { ECommerceService } from 'src/app/services/ecommerce.service';
   styleUrls: ['./home.component.sass'],
 })
 export class HomeComponent implements OnInit {
-  constructor(public eCommerce: ECommerceService) {}
+  constructor(public eCommerce: ECommerceService) {
+    this.eCommerce.fetchProducts()
+  }
 
   ngOnInit(): void {}
 }

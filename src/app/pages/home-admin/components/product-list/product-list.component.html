@@ -1,19 +1,22 @@
 <div class="product-list">
   <div class="actions">
-    <button type="button" class="btn btn-info">Add Product</button>
+    <button type="button" class="btn btn-info" (click)="openAddProductModal()">Adicionar Produto</button>
   </div>
+
+  <h4>Lista de Produtos</h4>
 
   <table class="table table-striped table-bordered table-responsive">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col"></th>
-        <th scope="col">Title</th>
-        <th scope="col">Description</th>
-        <th scope="col" class="s-150 center-text">Price</th>
-        <th scope="col" class="s-100 center-text">Discount</th>
-        <th scope="col" class="center-text">Stock</th>
-        <th scope="col" class="s-100 center-text">Actions</th>
+        <th scope="col">Título</th>
+        <th scope="col">Descrição</th>
+        <th scope="col" class="s-150 center-text">Preço</th>
+        <th scope="col" class="s-100 center-text">Desconto</th>
+        <th scope="col" class="center-text">Estoque</th>
+        <th scope="col" class="s-100 center-text">Disponivel</th>
+        <th scope="col" class="s-100 center-text">Ações</th>
       </tr>
     </thead>
     <tbody>
@@ -27,12 +30,9 @@
         <td class="center-text">{{ product.price }}</td>
         <td class="center-text">{{ product.discount }}</td>
         <td class="center-text">{{ product.stock }}</td>
+        <th scope="col" class="s-100 center-text">{{product.available ? 'SIM' : 'NÃO'}}</th>
         <td class="buttons">
-          <!-- <button type="button" class="btn btn-primary btn-sm">
-            <fa-icon class="primary" [icon]="faEdit"></fa-icon>
-          </button> -->
-          <fa-icon class="btn btn-primary btn-sm" [icon]="faEdit"></fa-icon>
-          <fa-icon class="btn btn-danger btn-sm" [icon]="faTrash"></fa-icon>
+          <fa-icon class="btn btn-primary btn-sm" [icon]="faEdit" (click)="openAddProductModal(product)"></fa-icon>
         </td>
       </tr>
     </tbody>

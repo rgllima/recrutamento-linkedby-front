@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +20,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
+import { AddProductComponent } from './pages/home-admin/components/add-product/add-product.component';
+import { OrderListComponent } from './pages/home-admin/components/order-list/order-list.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { LoginModalComponent } from './components/login-modal/login-modal.compon
     CarouselComponent,
     CheckoutComponent,
     LoginModalComponent,
+    AddProductComponent,
+    OrderListComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +49,7 @@ import { LoginModalComponent } from './components/login-modal/login-modal.compon
     NgbModule,
     FontAwesomeModule,
     FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

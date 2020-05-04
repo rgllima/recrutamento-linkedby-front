@@ -8,8 +8,7 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { AdminComponent } from './layouts/admin/admin.component';
 import { LoginAdminComponent } from './pages/login-admin/login-admin.component';
 import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
-import { ProductListComponent } from './pages/home-admin/components/product-list/product-list.component';
-import { from } from 'rxjs';
+import { AdminAuthGuard } from './admin-auth-guard';
 
 const routes: Routes = [
   {
@@ -34,12 +33,7 @@ const routes: Routes = [
       {
         path: '',
         component: HomeAdminComponent,
-        children: [
-          {
-            path: '',
-            component: ProductListComponent,
-          },
-        ],
+        canActivate: [AdminAuthGuard]
       },
     ],
   },
@@ -49,4 +43,6 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+
+}

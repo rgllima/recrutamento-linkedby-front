@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosStatic, AxiosInstance } from 'axios';
 
-const baseUrl = `http://localhost:8080`;
+const baseUrl = `https://recrutamento-linkedby.herokuapp.com/`;
 
 export class ApiService {
   private config: AxiosRequestConfig;

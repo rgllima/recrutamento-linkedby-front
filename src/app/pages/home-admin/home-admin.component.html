@@ -1,21 +1,17 @@
 <div class="home-admin">
   <nav class="navbar navbar-light bg-light">
-    <span class="navbar-brand mb-0 h1">Welcome, M. Days White.</span>
+    <span class="navbar-brand mb-0 h1">Bem-vindo, {{(eCommerce.customer$ | async).name}}</span>
 
     <ul class="nav justify-content-center">
       <li class="nav-item">
-        <a class="nav-link active" href="#">Product List</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Order List</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Exit</a>
+        <a class="nav-link" (click)="eCommerce.logout()" [style]="{'cursor': 'pointer'}">Sair</a>
       </li>
     </ul>
   </nav>
 
   <div class="home-tables">
-    <router-outlet></router-outlet>
+    <product-list></product-list>
+    <br>
+    <order-list></order-list>
   </div>
 </div>

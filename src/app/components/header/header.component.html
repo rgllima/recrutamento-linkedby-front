@@ -9,10 +9,9 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <div class="header-actions">
         <div class="customer-info">
-          <p *ngIf="(eCommerce.customer$ | async) != null"> Bem vindo, Rafael Lima</p>
+          <p *ngIf="(eCommerce.customer$ | async) != null"> Bem vindo, {{(eCommerce.customer$ | async).name}}</p>
           <a *ngIf="(eCommerce.customer$ | async) == null" (click)="openModal()">Clique para entrar</a>
         </div>
-
         <cart-icon></cart-icon>
       </div>
     </div>

@@ -7,6 +7,8 @@ import { ApiService } from './api.service';
 import { ICustomer } from '../types/ICustomer';
 import { IOrder } from '../types/IOrder';
 import { IAlert } from '../types/IAlert';
+import { IProduct } from '../types/IProduct';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class ECommerceService {
@@ -16,11 +18,12 @@ export class ECommerceService {
   private readonly _orderItems = new BehaviorSubject<IOrderItem[]>([]);
   private readonly _alert = new BehaviorSubject<IAlert>(null);
 
+  private readonly _orders = new BehaviorSubject<Order[]>([]);
+
   private apiService: ApiService;
 
-  constructor() {
+  constructor(private router: Router) {
     this.apiService = new ApiService();
-    this.fetchProducts();
   }
 
   readonly customer$ = this._customer.asObservable();
@@ -29,12 +32,13 @@ export class ECommerceService {
   readonly orderItems$ = this._orderItems.asObservable();
   readonly alert$ = this._alert.asObservable();
 
+  readonly orders$ = this._orders.asObservable();
+
   addProductToCart(product: Product): void {
     let order: Order = this._order.value;
     order.pushProduct(product);
     this._order.next(order);
     this._orderItems.next(order.items);
-    this._alert.next({ type: 'info', message: 'Produto Adicionado!' });
     console.log(this._order.value);
   }
 
@@ -78,10 +82,6 @@ export class ECommerceService {
           message: 'Usuário não encontrado!',
         });
       });
-  }
-
-  fetchUser(): void {
-    //todo verificar se o usuário existe e está logado
   }
 
   fetchProducts(): void {
@@ -165,5 +165,148 @@ export class ECommerceService {
 
   getCustomer(): ICustomer {
     return this._customer.value;
+  }
+
+  logout() {
+    sessionStorage.removeItem('token');
+    this._customer.next(null);
+    this.router.navigateByUrl(this.router.createUrlTree(['/admin/login']));
+  }
+
+  // Admin
+  doLoginAsAdmin(customer: ICustomer): void {
+    this.apiService
+      .getInstance()
+      .post('/login/asAdmin', {
+        email: customer.email,
+        password: customer.password,
+      })
+      .then((res) => {
+        if (res !== undefined) {
+          customer.password = '';
+          customer.name = res.data.name;
+          customer.id = res.data.id;
+          console.log(customer, res.data);
+          this._customer.next(customer);
+          this._alert.next({ type: 'success', message: 'Login bem sucedido!' });
+        } else {
+          this._alert.next({
+            type: 'danger',
+            message: 'Acesso não permitido!',
+          });
+        }
+      })
+      .catch((err: Error) => {
+        console.log(err.message);
+        this._alert.next({
+          type: 'danger',
+          message: 'Usuário não encontrado!',
+        });
+      });
+  }
+
+  fetchAdminProducts(): void {
+    this.apiService
+      .getInstance()
+      .get('/admin/product')
+      .then((res) => {
+        let products: Product[] = [];
+        for (const data of res.data) {
+          products.push(this.buildProduct(data));
+        }
+
+        this._products.next(products);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+
+  fetchAdminOrders(): void {
+    this.apiService
+      .getInstance()
+      .get('/admin/order')
+      .then((res) => {
+        let order: Order[] = [];
+        for (const data of res.data) {
+          order.push(this.buildOrder(data));
+        }
+        console.log(order);
+        this._orders.next(order);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+
+  createProduct(product: IProduct): void {
+    this.apiService
+      .getInstance()
+      .post('/admin/product', product)
+      .then((res) => {
+        if (res !== undefined) {
+          this._alert.next({ type: 'success', message: 'Produto Adicionado!' });
+          this.fetchAdminProducts();
+        } else {
+          this._alert.next({
+            type: 'danger',
+            message: 'Ocorreu um erro!',
+          });
+        }
+      })
+      .catch((err: Error) => {
+        console.log(err.message);
+        this._alert.next({
+          type: 'danger',
+          message: 'Ocorreu um erro!',
+        });
+      });
+  }
+
+  updateProduct(product: IProduct): void {
+    this.apiService
+      .getInstance()
+      .put('/admin/product', product)
+      .then((res) => {
+        if (res !== undefined) {
+          this._alert.next({ type: 'success', message: 'Produto Atualizado!' });
+          this.fetchAdminProducts();
+        } else {
+          this._alert.next({
+            type: 'danger',
+            message: 'Ocorreu um erro!',
+          });
+        }
+      })
+      .catch((err: Error) => {
+        console.log(err.message);
+        this._alert.next({
+          type: 'danger',
+          message: 'Ocorreu um erro!',
+        });
+      });
+  }
+
+  private buildProduct(data: any): Product {
+    return new Product(
+      data['id'],
+      data['title'],
+      data['cover'],
+      data['description'],
+      data['discount'],
+      data['price'],
+      data['stock'],
+      data['available'],
+      data['createdAt']
+    );
+  }
+
+  private buildOrder(data: any): Order {
+    return new Order(
+      data['id'],
+      data['customer'],
+      data['total'],
+      data['items']
+    );
   }
 }

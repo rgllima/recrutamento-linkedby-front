@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ECommerceService } from 'src/app/services/ecommerce.service';
 
 @Component({
   selector: 'app-home-admin',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class HomeAdminComponent implements OnInit {
-  constructor() {}
+  constructor(public eCommerce: ECommerceService) {
+    this.eCommerce.fetchAdminProducts()
+    this.eCommerce.fetchAdminOrders()
+  }
 
   ngOnInit(): void {}
 }

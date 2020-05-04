@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Adicionar Produto</h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <div class="form-group">
+      <label for="title">Nome do Produto</label>
+      <input type="text" class="form-control" formControlName="title" placeholder="Nome do Produto">
+    </div>
+    <div class="form-group">
+      <label for="cover">URL da Foto</label>
+      <input type="text" class="form-control" formControlName="cover" placeholder="URL da Foto">
+    </div>
+    <div class="form-group">
+      <label for="description">Descrição</label>
+      <input type="text" class="form-control" formControlName="description" placeholder="Descrição">
+    </div>
+    <div class="form-group">
+      <label for="discount">Desconto (%)</label>
+      <input type="number" class="form-control" formControlName="discount" placeholder="Ex.: 15">
+    </div>
+    <div class="form-group">
+      <label for="price">Preço</label>
+      <input type="number" class="form-control" formControlName="price" placeholder="Ex.: 50,59">
+    </div>
+    <div class="form-group">
+      <label for="stock">Estoque</label>
+      <input type="number" class="form-control" formControlName="stock" placeholder="Ex.: 20">
+    </div>
+    <div class="form-group">
+      <label for="stock">Disponibilidade</label>
+      <select formControlName="available" ngModel class="browser-default custom-select">
+        <option value="">Selecionar</option>
+        <option value="true">Sim</option>
+        <option value="false">Não</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+  </form>
+</div>

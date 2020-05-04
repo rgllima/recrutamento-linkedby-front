@@ -1,16 +1,15 @@
 import { IOrder } from '../types/IOrder';
 import { IOrderItem } from '../types/OrderItem';
 import { Product } from './Product';
+import { ICustomer } from '../types/ICustomer';
 
 export class Order implements IOrder {
-  id?: number;
-  total: number;
-  items: Array<IOrderItem>;
-
-  constructor() {
-    this.total = 0;
-    this.items = [];
-  }
+  constructor(
+    public id?: number,
+    public customer?: ICustomer,
+    public total: number = 0,
+    public items: IOrderItem[] = []
+  ) {}
 
   pushProduct(product: Product) {
     let orderItem = this.checkIfItHasProduct(product);
@@ -44,7 +43,7 @@ export class Order implements IOrder {
 
   removeOrderItem(orderItem: IOrderItem): void {
     this.items = this.items.filter((it) => it != orderItem);
-    orderItem.product.restoreStock(orderItem.quantity)
+    orderItem.product.restoreStock(orderItem.quantity);
   }
 
   private checkIfItHasProduct(product: Product): IOrderItem {

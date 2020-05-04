@@ -1,0 +1,28 @@
+<div class="order-list">
+  <h4>Lista de Pedidos</h4>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Cliente</th>
+        <th scope="col-6">Produtos</th>
+        <th scope="col" class="center-text">Total</th>
+      </tr>
+    </thead>
+    <tbody >
+      <tr *ngFor="let order of orders; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ order.customer.name }}</td>
+        <td>
+          <div class="order-items" *ngFor="let oItem of order.items; index as j">
+            <p>{{oItem.product.title}} - {{oItem.quantity}}x R$ {{oItem.subtotal.toFixed(2).replace('.', ',')}}</p>
+          </div>
+        </td>
+        <td class="center-text">
+          <p>R$ {{ order.total.toFixed(2).replace('.', ',') }}</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
